@@ -4,26 +4,35 @@
 	<title>CastCade Testing</title>
 	<meta charset="UTF-8">
 	<script src="https://code.createjs.com/createjs-2015.11.26.combined.js"></script>
+	<script src="ttt.js"></script>
 	<script>
 		function init() {
 			var stage = new createjs.Stage("castcadeCanvas");
-			demoCircle();
-			stage.update();
+			
+			var ttt = new TTT(stage);
+			ttt.createGrid();
+			ttt.createSelector();
+			ttt.drawO(ttt.tl.x, ttt.tl.y);
+			ttt.drawX(ttt.tc.x, ttt.tc.y);
+			ttt.drawO(ttt.tr.x, ttt.tr.y);
+			ttt.drawX(ttt.cl.x, ttt.cl.y);
+			ttt.drawO(ttt.cc.x, ttt.cc.y);
+			ttt.drawX(ttt.cr.x, ttt.cr.y);
+			ttt.drawO(ttt.bl.x, ttt.bl.y);
+			ttt.drawX(ttt.bc.x, ttt.bc.y);
+			ttt.drawO(ttt.br.x, ttt.br.y);
 
-			function demoCircle() {
-				var circle = new createjs.Shape();
-				circle.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 50);
-				circle.x = 100;
-				circle.y = 100;
-				stage.addChild(circle);
-			}
+			ttt.moveSelector(ttt.br.x, ttt.br.y);
+			ttt.update();
+
+
 		}
 	</script>
 
 </head>
 
 <body onload="init();">
-	<canvas id="castcadeCanvas" width="500" height="300"></canvas>
+	<canvas id="castcadeCanvas" width="800" height="600"></canvas>
 </body>
 
 </html>
