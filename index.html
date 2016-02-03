@@ -3,13 +3,18 @@
 <head>
 	<title>CastCade Testing</title>
 	<meta charset="UTF-8">
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="https://code.createjs.com/createjs-2015.11.26.combined.js"></script>
+	<script src="main.js"></script>
 	<script src="ttt.js"></script>
 	<script>
 		function init() {
+
+			dimensions = targetSize(10);
+
 			var stage = new createjs.Stage("castcadeCanvas");
 			
-			var ttt = new TTT(stage);
+			var ttt = new TTT(stage, dimensions);
 			ttt.createGrid();
 			ttt.createSelector();
 			ttt.drawO(ttt.tl.x, ttt.tl.y);
@@ -32,8 +37,12 @@
 </head>
 
 <body onload="init();">
-	<canvas id="castcadeCanvas" width="800" height="600"></canvas>
+	<canvas id="castcadeCanvas"></canvas>
 </body>
+
+<script>
+
+</script>
 
 </html>
 	

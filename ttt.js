@@ -1,5 +1,5 @@
 
-function TTT(stage) {
+function TTT(stage, dimensions) {
 
 	// Constant Declarations
 	// Cheap approximation of the square root of 2 (for square diagonal calculation)
@@ -13,20 +13,81 @@ function TTT(stage) {
 	gold = "#FFCC00";
 	goldenrod = "#C9960C";
 
+	// Dimensions
+	grid_width = 450;
+	grid_height = 450;
+	grid_padding = 100;
+
 
 	// Class Member Declarations
 
 	this.stage = stage;
+	this.w = dimensions[0];
+	this.h = dimensions[1];
 
-	this.tl = {x:100, y:100};
-	this.tc = {x:250, y:100};
-	this.tr = {x:400, y:100};
-	this.cl = {x:100, y:250};
-	this.cc = {x:250, y:250};
-	this.cr = {x:400, y:250};
-	this.bl = {x:100, y:400};
-	this.bc = {x:250, y:400};
-	this.br = {x:400, y:400};
+	this.x = this.w / 2 - grid_width / 2 - grid_padding;
+	this.y = this.h / 2 - grid_height / 2 - grid_padding;
+
+	this.tl = new Box(this, this.x + 100, this.y + 100);
+	this.tc = new Box(this, this.x + 250, this.y + 100);
+	this.tr = new Box(this, this.x + 400, this.y + 100);
+	this.cl = new Box(this, this.x + 100, this.y + 250);
+	this.cc = new Box(this, this.x + 250, this.y + 250);
+	this.cr = new Box(this, this.x + 400, this.y + 250);
+	this.bl = new Box(this, this.x + 100, this.y + 400);
+	this.bc = new Box(this, this.x + 250, this.y + 400);
+	this.br = new Box(this, this.x + 400, this.y + 400);
+
+	this.selector_index = 0;
+
+	this.selectorUp = function() {
+		if (this.selector_index - 3 < 0) {}
+		else { this.selector_index -= 3; }
+	};
+
+	this.selectorDown = function() {
+		if (this.selector_index + 3 > 8) {}
+		else { this.selector_index += 3; }
+	};
+
+	this.selectorLeft = function() {
+		
+		if (selector_index == 0) {
+			selector_index = 2;
+		}
+
+		else if (selector_index == 3) {
+			selector_index = 5;
+		}
+
+		else if (selector_index == 6) {
+			selector_index = 8;
+		}
+
+		else {
+			selector_index--;
+		}
+
+	};
+
+	this.selectorRight = function() {
+
+		if (selector_index == 2) {
+			selector_index = 0;
+		}
+
+		else if (selector_index == 5) {
+			selector_index = 3;
+		}
+
+		else if (selector_index == 8) {
+			selector_index = 6;
+		}
+
+		else {
+			selector_index++;
+		}
+	};
 
 	this.children = [];
 
@@ -58,7 +119,7 @@ function TTT(stage) {
 		this.stage.addChild(X);
 
 
-	}
+	};
 
 	this.drawO = function(x, y) {
 		var O = new createjs.Shape();
@@ -150,4 +211,28 @@ function TTT(stage) {
 
 }
 
+function Box(parent, x, y) {
 
+	this.x = x;
+	this.y = y;
+	this.state = 0;
+
+	this.parent = parent;
+	this.isEmpty = function() {return this.state == 0; };
+	this.isX = function() {return this.state == 1; };
+	this.isO = function() {return this.state == 2; };
+
+	this.addX = function() {
+		parent.drawX(this.x, this.y);
+		this.state = 1;
+	};
+
+	this.addO = function() {
+		parent.drawO(this.x, this.y);
+		this.state = 2;
+	};
+
+	this.clear = function() {
+		this.state = 0;
+	};
+}
