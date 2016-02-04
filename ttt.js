@@ -40,52 +40,69 @@ function TTT(stage, dimensions) {
 
 	this.selector_index = 0;
 
+	// Contains references corresponding to each grid position for the selector 
+	this.selector_grid_ref = [
+		this.tl,
+		this.tc,
+		this.tr,
+		this.cl,
+		this.cc,
+		this.cr,
+		this.bl,
+		this.bc,
+		this.br
+	];
+
 	this.selectorUp = function() {
-		if (this.selector_index - 3 < 0) {}
+		if (this.selector_index - 3 < 0) {
+			this.selector_index += 6;
+		}
 		else { this.selector_index -= 3; }
 	};
 
 	this.selectorDown = function() {
-		if (this.selector_index + 3 > 8) {}
+		if (this.selector_index + 3 > 8) {
+			this.selector_index -= 6;
+		}
 		else { this.selector_index += 3; }
 	};
 
 	this.selectorLeft = function() {
 		
-		if (selector_index == 0) {
-			selector_index = 2;
+		if (this.selector_index == 0) {
+			this.selector_index = 2;
 		}
 
-		else if (selector_index == 3) {
-			selector_index = 5;
+		else if (this.selector_index == 3) {
+			this.selector_index = 5;
 		}
 
-		else if (selector_index == 6) {
-			selector_index = 8;
+		else if (this.selector_index == 6) {
+			this.selector_index = 8;
 		}
 
 		else {
-			selector_index--;
+			this.selector_index--;
 		}
 
 	};
 
 	this.selectorRight = function() {
 
-		if (selector_index == 2) {
-			selector_index = 0;
+		if (this.selector_index == 2) {
+			this.selector_index = 0;
 		}
 
-		else if (selector_index == 5) {
-			selector_index = 3;
+		else if (this.selector_index == 5) {
+			this.selector_index = 3;
 		}
 
-		else if (selector_index == 8) {
-			selector_index = 6;
+		else if (this.selector_index == 8) {
+			this.selector_index = 6;
 		}
 
 		else {
-			selector_index++;
+			this.selector_index++;
 		}
 	};
 
@@ -175,10 +192,10 @@ function TTT(stage, dimensions) {
 		this.stage.addChild(selector);
 	};
 
-	this.moveSelector = function(x, y) {
-		this.selector.x = x;
-		this.selector.y = y;
-	}
+	this.updateSelector = function() {
+		this.selector.x = this.selector_grid_ref[this.selector_index].x;
+		this.selector.y = this.selector_grid_ref[this.selector_index].y;
+	};
 
 	this.getCurrentSelectorPos = function () {
 		out = {x:0, y:0};
@@ -186,9 +203,10 @@ function TTT(stage, dimensions) {
 		out.y = this.selector.y;
 		return out;
 
-	}
+	};
 
 	this.update = function() {
+		this.updateSelector();
 		this.stage.update();
 	};
 

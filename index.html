@@ -27,16 +27,58 @@
 			ttt.drawX(ttt.bc.x, ttt.bc.y);
 			ttt.drawO(ttt.br.x, ttt.br.y);
 
-			ttt.moveSelector(ttt.br.x, ttt.br.y);
+			ttt.selectorDown();
+			ttt.selectorRight();
+
 			ttt.update();
 
+			$("#globalContainer").keydown(
+				function (event) {
+					handleKeydown(event);
+				}
+			);
+
+			function handleKeydown(event) {
+
+				switch (event.which) {
+					case 37:	// Left
+					case 65:	// a
+						//console.log("PRESSED LEFT");
+						ttt.selectorLeft();
+						break;
+
+					case 38:	// Up
+					case 87:	// w
+						//console.log("PRESSED UP");
+						ttt.selectorUp();
+						break;
+
+					case 39:	// Right
+					case 68:	// d
+						//console.log("PRESSED RIGHT");
+						ttt.selectorRight();
+						break;
+
+					case 40:	// Down
+					case 83:	// s
+						//console.log("PRESSED DOWN");
+						ttt.selectorDown();
+						break;
+
+					default:
+						//console.log("null was returned!");
+						break;
+				}
+
+				ttt.update();
+			}
 
 		}
 	</script>
 
 </head>
 
-<body onload="init();">
+<body id="globalContainer" onload="init();">
 	<canvas id="castcadeCanvas"></canvas>
 </body>
 
