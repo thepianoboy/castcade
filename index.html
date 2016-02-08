@@ -10,13 +10,15 @@
 	<script>
 		function init() {
 
-			dimensions = targetSize(10);
+			dimensions = targetSize(20);
 
 			var stage = new createjs.Stage("castcadeCanvas");
 			
 			var ttt = new TTT(stage, dimensions);
 			ttt.createGrid();
 			ttt.createSelector();
+			
+			/*
 			ttt.drawO(ttt.tl.x, ttt.tl.y);
 			ttt.drawX(ttt.tc.x, ttt.tc.y);
 			ttt.drawO(ttt.tr.x, ttt.tr.y);
@@ -26,9 +28,15 @@
 			ttt.drawO(ttt.bl.x, ttt.bl.y);
 			ttt.drawX(ttt.bc.x, ttt.bc.y);
 			ttt.drawO(ttt.br.x, ttt.br.y);
+			*/
 
 			ttt.selectorDown();
 			ttt.selectorRight();
+
+			prompt1 = drawText(0, 0, "Press WASD to move the cursor...");
+			prompt2 = drawText(0, dimensions[1] - 48, "Press Space to toggle between Xs and Os");
+			stage.addChild(prompt1);
+			stage.addChild(prompt2);
 
 			ttt.update();
 
@@ -41,6 +49,11 @@
 			function handleKeydown(event) {
 
 				switch (event.which) {
+
+					case 32:	// Space
+						ttt.toggleState();
+						break;
+
 					case 37:	// Left
 					case 65:	// a
 						//console.log("PRESSED LEFT");

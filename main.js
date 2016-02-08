@@ -16,3 +16,19 @@ function targetSize(padding) {
 	return [w, h];
 
 }
+
+
+function drawText(x, y, message, color = '#000000', font = '32px Helvetica') {
+	var text = new createjs.Text();
+
+	text.text = message;
+	text.color = color;
+	text.font = font;
+
+	text.x = x;
+	text.y = y;
+
+	return text;
+	
+}
+

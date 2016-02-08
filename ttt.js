@@ -53,6 +53,11 @@ function TTT(stage, dimensions) {
 		this.br
 	];
 
+	this.children = [];
+
+
+	// Class Methods
+
 	this.selectorUp = function() {
 		if (this.selector_index - 3 < 0) {
 			this.selector_index += 6;
@@ -106,9 +111,23 @@ function TTT(stage, dimensions) {
 		}
 	};
 
-	this.children = [];
+	this.toggleState = function() {
 
-	// Class Methods
+		var gridref = this.selector_grid_ref[this.selector_index];
+
+		if (gridref.isEmpty()) {
+			gridref.addX();
+		}
+
+		else if (gridref.isX()) {
+			gridref.addO();
+		}
+
+		else {
+			gridref.clear();
+		}
+	};
+
 
 	this.demoCircle = function() {
 		var circle = new createjs.Shape();
@@ -134,6 +153,7 @@ function TTT(stage, dimensions) {
 
 		this.children.push(X);
 		this.stage.addChild(X);
+		return X;
 
 
 	};
@@ -145,6 +165,8 @@ function TTT(stage, dimensions) {
 		O.y = y + 50;
 		this.children.push(O);
 		this.stage.addChild(O);
+
+		return O;
 	};
 
 	this.createGrid = function() {
@@ -235,22 +257,39 @@ function Box(parent, x, y) {
 	this.y = y;
 	this.state = 0;
 
+	this.shape = -1;
+
 	this.parent = parent;
 	this.isEmpty = function() {return this.state == 0; };
 	this.isX = function() {return this.state == 1; };
 	this.isO = function() {return this.state == 2; };
 
 	this.addX = function() {
-		parent.drawX(this.x, this.y);
+
+		if (this.shape != -1) {
+			parent.stage.removeChild(this.shape);
+		}
+
+		this.shape = parent.drawX(this.x, this.y);
 		this.state = 1;
 	};
 
 	this.addO = function() {
-		parent.drawO(this.x, this.y);
+
+		if (this.shape != -1) {
+			parent.stage.removeChild(this.shape);
+		}
+
+		this.shape = parent.drawO(this.x, this.y);
 		this.state = 2;
 	};
 
 	this.clear = function() {
+
+		if (this.shape != -1) {
+			parent.stage.removeChild(this.shape);
+		}
+		
 		this.state = 0;
 	};
 }
