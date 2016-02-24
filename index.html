@@ -12,6 +12,22 @@
 	<script>
 		function init() {
 
+			/* Initialize Chromecast Library Components */
+
+			var receiverMgr = cast.receiver.CastReceiverManager.getInstance();
+			var appCfg = new cast.receiver.CastReceiverManager.Config();
+
+			// Set configuration info
+			appConfig.statusText = "TicTacToe";
+			appConfig.MaxInactivity = 6000;
+
+			// Create the Cast Game object
+			var gameCfg = new cast.receiver.games.GameManagerConfig();
+			gameCfg.applicationName = "CastCade";
+			gameCfg.maxPlayers = 2;
+
+			/* Initialize Game Components */
+
 			dimensions = targetSize(20);
 
 			var stage = new createjs.Stage("castcadeCanvas");
